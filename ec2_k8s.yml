@@ -1,0 +1,42 @@
+- hosts: localhost
+  vars_files:
+      - credential.yml
+  tasks:
+  - name: launch vm on AWS cloud
+    ec2:
+          key_name: "mykey1111"
+          instance_type: "t2.micro"
+          image:  "ami-08e0ca9924195beba"
+          wait: yes
+          count: 1
+          vpc_subnet_id: "subnet-15006b59"
+          assign_public_ip: yes
+          region: "ap-south-1"
+          state: present
+          group: "default"
+          aws_access_key: "{{ myuser   }}"
+          aws_secret_key: "{{  mypass   }}"
+          instance_tags: 
+                  Name: k8_master
+
+- hosts: localhost
+  vars_files:
+      - credential.yml
+  tasks:
+  - name: launch vm on AWS cloud
+    ec2:
+          key_name: "mykey1111"
+          instance_type: "t2.micro"
+          image:  "ami-08e0ca9924195beba"
+          wait: yes
+          count: 2
+          vpc_subnet_id: "subnet-15006b59"
+          assign_public_ip: yes
+          region: "ap-south-1"
+          state: present
+          group: "default"
+          aws_access_key: "{{ myuser   }}"
+          aws_secret_key: "{{  mypass   }}"
+          instance_tags: 
+                  Name: k8s_slave
+          

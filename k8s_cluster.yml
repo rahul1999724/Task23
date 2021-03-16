@@ -1,0 +1,18 @@
+- hosts: ["tag_Name_k8_master"]
+  roles:
+  - name: "configuring master node"
+    role: k8s_master
+
+- hosts: ["tag_Name_k8s_slave"]
+  vars_prompt:
+  - name: "master_token"
+    prompt: "Enter Token to join master: "
+    private: no 
+  roles:
+  - name: "configuring slave node"
+    role: k8s_slave    
+
+- hosts: ["tag_Name_k8_master"]
+  roles:
+  - name: "Launching Wordpress and Mysql"
+    role:  mysql-wordpress
